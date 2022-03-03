@@ -1,0 +1,171 @@
+{
+    "attachments": {
+        "ui:description": "Additional unknown keys are allowed.",
+        "ui:title": "Attachments"
+    },
+    "authors": {
+        "ui:description": "A list of authors. The authors are the creators of the specifications and the primary points of contact.",
+        "ui:title": "Authors"
+    },
+    "badges": {
+        "ui:description": "a list of badges",
+        "ui:title": "Badges"
+    },
+    "cite": {
+        "ui:description": "A list of citation entries.\nEach entry contains a mandatory `text` field and either one or both of `doi` and `url`.\nE.g. the citation for the model architecture and/or the training data used.",
+        "ui:title": "Cite"
+    },
+    "config": {
+        "ui:description": "A custom configuration field that can contain any keys not present in the RDF spec. This means you should not store, for example, github repo URL in `config` since we already have the `git_repo` key defined in the spec.\nKeys in `config` may be very specific to a tool or consumer software. To avoid conflicted definitions, it is recommended to wrap configuration into a sub-field named with the specific domain or tool name, for example:\n\n```yaml\n   config:\n      bioimage_io:  # here is the domain name\n        my_custom_key: 3837283\n        another_key:\n           nested: value\n      imagej:\n        macro_dir: /path/to/macro/file\n```\nIf possible, please use [`snake_case`](https://en.wikipedia.org/wiki/Snake_case) for keys in `config`.\nFor example:\n```yaml\nconfig:\n  # custom config for DeepImageJ, see https://github.com/bioimage-io/configuration/issues/23\n  deepimagej:\n    model_keys:\n      # In principle the tag \"SERVING\" is used in almost every tf model\n      model_tag: tf.saved_model.tag_constants.SERVING\n      # Signature definition to call the model. Again \"SERVING\" is the most general\n      signature_definition: tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY\n    test_information:\n      input_size: [2048x2048] # Size of the input images\n      output_size: [1264x1264 ]# Size of all the outputs\n      device: cpu # Device used. In principle either cpu or GPU\n      memory_peak: 257.7 Mb # Maximum memory consumed by the model in the device\n      runtime: 78.8s # Time it took to run the model\n      pixel_size: [9.658E-4\u00b5mx9.658E-4\u00b5m] # Size of the pixels of the input\n```\n",
+        "ui:title": "Config"
+    },
+    "covers": {
+        "ui:description": "A list of cover images provided by either a relative path to the model folder, or a hyperlink starting with 'http[s]'. Please use an image smaller than 500KB and an aspect ratio width to height of 2:1. The supported image formats are: 'jpg', 'png', 'gif'.",
+        "ui:title": "Covers"
+    },
+    "description": {
+        "ui:description": "A brief description.",
+        "ui:title": "Description"
+    },
+    "documentation": {
+        "ui:description": "URL of markdown file with additional documentation.",
+        "ui:help": "The file must be in markdown format with `.md` file name extension.",
+        "ui:title": "Documentation"
+    },
+    "download_url": {
+        "ui:description": "optional url to download the resource from",
+        "ui:title": "Download Url"
+    },
+    "format_version": {
+        "ui:description": "Version of the BioImage.IO Model Resource Description File Specification used.\nThis is mandatory, and important for the consumer software to verify before parsing the fields.\nThe recommended behavior for the implementation is to keep backward compatibility and throw an error if the model yaml\nis in an unsupported format version. The current format version described here is\n0.4.5",
+        "ui:title": "Format Version"
+    },
+    "git_repo": {
+        "ui:description": "A url to the git repository, e.g. to Github or Gitlab.If the model is contained in a subfolder of a git repository, then a url to the exact folder(which contains the configuration yaml file) should be used.",
+        "ui:title": "Git Repo"
+    },
+    "icon": {
+        "ui:description": "an icon for the resource",
+        "ui:title": "Icon"
+    },
+    "id": {
+        "ui:description": "Unique id within a collection of resources.",
+        "ui:title": "Id"
+    },
+    "inputs": {
+        "ui:description": "Describes the input tensors expected by this model.",
+        "ui:title": "Inputs"
+    },
+    "license": {
+        "ui:description": "A [SPDX license identifier](https://spdx.org/licenses/)(e.g. `CC-BY-4.0`, `MIT`, `BSD-2-Clause`). We don't support custom license beyond the SPDX license list, if you need that please send an Github issue to discuss your intentions with the community.",
+        "ui:title": "License"
+    },
+    "links": {
+        "ui:description": "links to other bioimage.io resources",
+        "ui:title": "Links"
+    },
+    "maintainers": {
+        "ui:description": "Maintainers of this resource.",
+        "ui:title": "Maintainers"
+    },
+    "name": {
+        "ui:description": "Name of this model. It should be human-readable and only contain letters, numbers, underscore '_', minus '-' or spaces and not be longer than 64 characters.",
+        "ui:title": "Name"
+    },
+    "outputs": {
+        "ui:description": "Describes the output tensors from this model.",
+        "ui:title": "Outputs"
+    },
+    "packaged_by": {
+        "ui:description": "The persons that have packaged and uploaded this model. Only needs to be specified if different from `authors` in root or any entry in `weights`.",
+        "ui:title": "Packaged By"
+    },
+    "parent": {
+        "ui:description": "The model from which this model is derived, e.g. by fine-tuning the weights.",
+        "ui:title": "Parent"
+    },
+    "rdf_source": {
+        "ui:description": "url or doi to the source of the resource definition",
+        "ui:title": "Rdf Source",
+        "ui:widget": "hidden"
+    },
+    "run_mode": {
+        "ui:description": "Custom run mode for this model: for more complex prediction procedures like test time data augmentation that currently cannot be expressed in the specification. No standard run modes are defined yet.",
+        "ui:title": "Run Mode"
+    },
+    "sample_inputs": {
+        "ui:description": "List of URIs/local relative paths to sample inputs to illustrate possible inputs for the model, for example stored as png or tif images. The model is not tested with these sample files that serve to inform a human user about an example use case.",
+        "ui:title": "Sample Inputs"
+    },
+    "sample_outputs": {
+        "ui:description": "List of URIs/local relative paths to sample outputs corresponding to the `sample_inputs`.",
+        "ui:title": "Sample Outputs"
+    },
+    "tags": {
+        "ui:description": "A list of tags.",
+        "ui:title": "Tags"
+    },
+    "test_inputs": {
+        "ui:description": "List of URIs or local relative paths to test inputs as described in inputs for **a single test case**. This means if your model has more than one input, you should provide one URI for each input.Each test input should be a file with a ndarray in [numpy.lib file format](https://numpy.org/doc/stable/reference/generated/numpy.lib.format.html#module-numpy.lib.format).The extension must be '.npy'.",
+        "ui:title": "Test Inputs"
+    },
+    "test_outputs": {
+        "ui:description": "Analog to test_inputs.",
+        "ui:title": "Test Outputs"
+    },
+    "timestamp": {
+        "ui:description": "Timestamp of the initial creation of this model in [ISO 8601](#https://en.wikipedia.org/wiki/ISO_8601) format.",
+        "ui:title": "Timestamp"
+    },
+    "training_data": {
+        "ui:description": "",
+        "ui:title": "Training Data"
+    },
+    "type": {
+        "ui:description": "",
+        "ui:title": "Type"
+    },
+    "ui:order": [
+        "name",
+        "description",
+        "documentation",
+        "authors",
+        "cite",
+        "badges",
+        "config",
+        "covers",
+        "download_url",
+        "format_version",
+        "git_repo",
+        "icon",
+        "id",
+        "inputs",
+        "license",
+        "links",
+        "maintainers",
+        "outputs",
+        "packaged_by",
+        "parent",
+        "run_mode",
+        "sample_inputs",
+        "sample_outputs",
+        "tags",
+        "test_inputs",
+        "test_outputs",
+        "timestamp",
+        "training_data",
+        "weights",
+        "version",
+        "attachments",
+        "type",
+        "rdf_source"
+    ],
+    "version": {
+        "ui:description": "The version number of the resource. The version number format must be a string in `MAJOR.MINOR.PATCH` format following the guidelines in Semantic Versioning 2.0.0 (see https://semver.org/), e.g. the initial version number should be `0.1.0`.",
+        "ui:title": "Version"
+    },
+    "weights": {
+        "ui:description": "",
+        "ui:title": "Weights"
+    }
+}

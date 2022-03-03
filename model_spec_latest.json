@@ -1,0 +1,2076 @@
+{
+    "$ref": "#/definitions/Model",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Attachments": {
+            "additionalProperties": true,
+            "properties": {
+                "files": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "title": "files",
+                    "type": "array",
+                    "ui:description": "File attachments; included when packaging the resource.",
+                    "ui:title": "Files"
+                }
+            },
+            "type": "object"
+        },
+        "Author": {
+            "additionalProperties": false,
+            "properties": {
+                "affiliation": {
+                    "title": "affiliation",
+                    "type": "string",
+                    "ui:description": "Affiliation.",
+                    "ui:title": "Affiliation"
+                },
+                "email": {
+                    "title": "email",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Email"
+                },
+                "github_user": {
+                    "title": "github_user",
+                    "type": "string",
+                    "ui:description": "GitHub user name.",
+                    "ui:title": "Github User"
+                },
+                "name": {
+                    "require": true,
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Full name.",
+                    "ui:title": "Name"
+                },
+                "orcid": {
+                    "minLength": 19,
+                    "title": "orcid",
+                    "type": "string",
+                    "ui:description": "[orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)",
+                    "ui:title": "Orcid"
+                }
+            },
+            "type": "object"
+        },
+        "Badge": {
+            "additionalProperties": false,
+            "properties": {
+                "icon": {
+                    "title": "icon",
+                    "type": "string",
+                    "ui:description": "e.g. 'https://colab.research.google.com/assets/colab-badge.svg'",
+                    "ui:title": "Icon"
+                },
+                "label": {
+                    "title": "label",
+                    "type": "string",
+                    "ui:description": "e.g. 'Open in Colab'",
+                    "ui:title": "Label"
+                },
+                "url": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                }
+            },
+            "required": [
+                "label"
+            ],
+            "type": "object"
+        },
+        "CiteEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "doi": {
+                    "title": "doi",
+                    "type": "string",
+                    "ui:description": "digital object identifier, see https://www.doi.org/",
+                    "ui:title": "Doi"
+                },
+                "text": {
+                    "title": "text",
+                    "type": "string",
+                    "ui:description": "free text description",
+                    "ui:title": "Text"
+                },
+                "url": {
+                    "title": "url",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Url"
+                }
+            },
+            "required": [
+                "text"
+            ],
+            "type": "object"
+        },
+        "Dataset": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "$ref": "#/definitions/Attachments",
+                    "type": "object",
+                    "ui:description": "Additional unknown keys are allowed.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. The authors are the creators of the specifications and the primary points of contact.",
+                    "ui:title": "Authors"
+                },
+                "badges": {
+                    "items": {
+                        "$ref": "#/definitions/Badge",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Badges"
+                    },
+                    "title": "badges",
+                    "type": "array",
+                    "ui:description": "a list of badges",
+                    "ui:title": "Badges"
+                },
+                "cite": {
+                    "items": {
+                        "$ref": "#/definitions/CiteEntry",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Cite"
+                    },
+                    "title": "cite",
+                    "type": "array",
+                    "ui:description": "A list of citation entries.\nEach entry contains a mandatory `text` field and either one or both of `doi` and `url`.\nE.g. the citation for the model architecture and/or the training data used.",
+                    "ui:title": "Cite"
+                },
+                "config": {
+                    "additionalProperties": {},
+                    "bioimageio_descriptio": "A custom configuration field that can contain any keys not present in the RDF spec. This means you should not store, for example, github repo URL in `config` since we already have the `git_repo` key defined in the spec.\nKeys in `config` may be very specific to a tool or consumer software. To avoid conflicted definitions, it is recommended to wrap configuration into a sub-field named with the specific domain or tool name, for example:\n\n```yaml\n   config:\n      bioimage_io:  # here is the domain name\n        my_custom_key: 3837283\n        another_key:\n           nested: value\n      imagej:\n        macro_dir: /path/to/macro/file\n```\nIf possible, please use [`snake_case`](https://en.wikipedia.org/wiki/Snake_case) for keys in `config`.",
+                    "title": "config",
+                    "type": "object",
+                    "ui:description": "",
+                    "ui:title": "Config"
+                },
+                "covers": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "title": "covers",
+                    "type": "array",
+                    "ui:description": "A list of cover images provided by either a relative path to the model folder, or a hyperlink starting with 'http[s]'. Please use an image smaller than 500KB and an aspect ratio width to height of 2:1. The supported image formats are: 'jpg', 'png', 'gif'.",
+                    "ui:title": "Covers"
+                },
+                "description": {
+                    "title": "description",
+                    "type": "string",
+                    "ui:description": "A brief description.",
+                    "ui:title": "Description"
+                },
+                "documentation": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "download_url": {
+                    "title": "download_url",
+                    "type": "string",
+                    "ui:description": "optional url to download the resource from",
+                    "ui:title": "Download Url"
+                },
+                "format_version": {
+                    "title": "format_version",
+                    "type": "string",
+                    "ui:default": "0.2.2",
+                    "ui:description": "Version of the BioImage.IO Resource Description File Specification used.The current general format version described here is 0.2.2. Note: The general RDF format is not to be confused with specialized RDF format like the Model RDF format.",
+                    "ui:title": "Format Version"
+                },
+                "git_repo": {
+                    "title": "git_repo",
+                    "type": "string",
+                    "ui:description": "A url to the git repository, e.g. to Github or Gitlab.",
+                    "ui:title": "Git Repo"
+                },
+                "icon": {
+                    "title": "icon",
+                    "type": "string",
+                    "ui:description": "an icon for the resource",
+                    "ui:title": "Icon"
+                },
+                "id": {
+                    "title": "id",
+                    "type": "string",
+                    "ui:description": "Unique id within a collection of resources.",
+                    "ui:title": "Id"
+                },
+                "license": {
+                    "title": "license",
+                    "type": "string",
+                    "ui:description": "A [SPDX license identifier](https://spdx.org/licenses/)(e.g. `CC-BY-4.0`, `MIT`, `BSD-2-Clause`). We don't support custom license beyond the SPDX license list, if you need that please send an Github issue to discuss your intentions with the community.",
+                    "ui:title": "License"
+                },
+                "links": {
+                    "items": {
+                        "title": "links",
+                        "type": "string",
+                        "ui:description": "",
+                        "ui:title": "Links"
+                    },
+                    "title": "links",
+                    "type": "array",
+                    "ui:description": "links to other bioimage.io resources",
+                    "ui:title": "Links"
+                },
+                "maintainers": {
+                    "items": {
+                        "$ref": "#/definitions/Maintainer",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Maintainers"
+                    },
+                    "title": "maintainers",
+                    "type": "array",
+                    "ui:description": "Maintainers of this resource.",
+                    "ui:title": "Maintainers"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:autofocus": true,
+                    "ui:description": "name of the resource, a human-friendly name",
+                    "ui:placeholder": "My Resource",
+                    "ui:title": "Resource name"
+                },
+                "rdf_source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "tags": {
+                    "items": {
+                        "title": "tags",
+                        "type": "string",
+                        "ui:description": "",
+                        "ui:title": "Tags"
+                    },
+                    "title": "tags",
+                    "type": "array",
+                    "ui:description": "A list of tags.",
+                    "ui:title": "Tags"
+                },
+                "type": {
+                    "title": "type",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Type"
+                },
+                "version": {
+                    "title": "version",
+                    "type": "string",
+                    "ui:description": "The version number of the resource. The version number format must be a string in `MAJOR.MINOR.PATCH` format following the guidelines in Semantic Versioning 2.0.0 (see https://semver.org/), e.g. the initial version number should be `0.1.0`.",
+                    "ui:title": "Version"
+                }
+            },
+            "required": [
+                "description",
+                "format_version",
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ImplicitOutputShape": {
+            "additionalProperties": false,
+            "properties": {
+                "offset": {
+                    "items": {
+                        "format": "float",
+                        "title": "offset",
+                        "type": "number",
+                        "ui:description": "",
+                        "ui:title": "Offset"
+                    },
+                    "title": "offset",
+                    "type": "array",
+                    "ui:description": "Position of origin wrt to input. Multiple of 0.5.",
+                    "ui:title": "Offset"
+                },
+                "reference_tensor": {
+                    "title": "reference_tensor",
+                    "type": "string",
+                    "ui:description": "Name of the reference tensor.",
+                    "ui:title": "Reference Tensor"
+                },
+                "scale": {
+                    "items": {
+                        "format": "float",
+                        "title": "scale",
+                        "type": "number",
+                        "ui:description": "",
+                        "ui:title": "Scale"
+                    },
+                    "title": "scale",
+                    "type": "array",
+                    "ui:description": "'output_pix/input_pix' for each dimension.",
+                    "ui:title": "Scale"
+                }
+            },
+            "required": [
+                "offset",
+                "reference_tensor",
+                "scale"
+            ],
+            "type": "object"
+        },
+        "InputTensor": {
+            "additionalProperties": false,
+            "properties": {
+                "axes": {
+                    "title": "axes",
+                    "type": "string",
+                    "ui:description": "Axes identifying characters from: bitczyx. Same length and order as the axes in `shape`.\n\n| character | description |\n| --- | --- |\n|  b  |  batch (groups multiple samples) |\n|  i  |  instance/index/element |\n|  t  |  time |\n|  c  |  channel |\n|  z  |  spatial dimension z |\n|  y  |  spatial dimension y |\n|  x  |  spatial dimension x |",
+                    "ui:title": "Axes"
+                },
+                "data_range": {
+                    "items": [
+                        {
+                            "format": "float",
+                            "title": "data_range",
+                            "type": "number",
+                            "ui:description": "",
+                            "ui:title": "Data Range"
+                        },
+                        {
+                            "format": "float",
+                            "title": "data_range",
+                            "type": "number",
+                            "ui:description": "",
+                            "ui:title": "Data Range"
+                        }
+                    ],
+                    "type": "array"
+                },
+                "data_type": {
+                    "title": "data_type",
+                    "type": "string",
+                    "ui:description": "The data type of this tensor. For inputs, only `float32` is allowed and the consumer software needs to ensure that the correct data type is passed here. For outputs can be any of `float32, float64, (u)int8, (u)int16, (u)int32, (u)int64`. The data flow in bioimage.io models is explained [in this diagram.](https://docs.google.com/drawings/d/1FTw8-Rn6a6nXdkZ_SkMumtcjvur9mtIhRqLwnKqZNHM/edit).",
+                    "ui:title": "Data Type"
+                },
+                "description": {
+                    "title": "description",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Description"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Tensor name. No duplicates are allowed.",
+                    "ui:title": "Name"
+                },
+                "preprocessing": {
+                    "items": {
+                        "$ref": "#/definitions/Preprocessing",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Preprocessing"
+                    },
+                    "title": "preprocessing",
+                    "type": "array",
+                    "ui:description": "Description of how this input should be preprocessed.",
+                    "ui:title": "Preprocessing"
+                },
+                "shape": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "title": "",
+                                "type": "integer",
+                                "ui:description": ""
+                            },
+                            "title": "",
+                            "type": "array",
+                            "ui:description": "Exact shape with same length as `axes`, e.g. `shape: [1, 512, 512, 1]`"
+                        },
+                        {
+                            "$ref": "#/definitions/ParametrizedInputShape",
+                            "type": "object",
+                            "ui:description": "A sequence of valid shapes given by `shape = min + k * step for k in {0, 1, ...}`."
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "axes",
+                "data_type",
+                "name",
+                "shape"
+            ],
+            "type": "object"
+        },
+        "KerasHdf5WeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "tensorflow_version": {
+                    "title": "tensorflow_version",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Tensorflow Version"
+                },
+                "weights_format": {
+                    "enum": [
+                        "keras_hdf5"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        },
+        "LinkedDataset": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "title": "id",
+                    "type": "string",
+                    "ui:description": "dataset id",
+                    "ui:title": "Id"
+                }
+            },
+            "type": "object"
+        },
+        "Maintainer": {
+            "additionalProperties": false,
+            "properties": {
+                "affiliation": {
+                    "title": "affiliation",
+                    "type": "string",
+                    "ui:description": "Affiliation.",
+                    "ui:title": "Affiliation"
+                },
+                "email": {
+                    "title": "email",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Email"
+                },
+                "github_user": {
+                    "require": true,
+                    "title": "github_user",
+                    "type": "string",
+                    "ui:description": "GitHub user name.",
+                    "ui:title": "Github User"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Full name.",
+                    "ui:title": "Name"
+                },
+                "orcid": {
+                    "minLength": 19,
+                    "title": "orcid",
+                    "type": "string",
+                    "ui:description": "[orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)",
+                    "ui:title": "Orcid"
+                }
+            },
+            "type": "object"
+        },
+        "Model": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "$ref": "#/definitions/Attachments",
+                    "type": "object",
+                    "ui:description": "Additional unknown keys are allowed.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "minItems": 1,
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. The authors are the creators of the specifications and the primary points of contact.",
+                    "ui:title": "Authors"
+                },
+                "badges": {
+                    "items": {
+                        "$ref": "#/definitions/Badge",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Badges"
+                    },
+                    "title": "badges",
+                    "type": "array",
+                    "ui:description": "a list of badges",
+                    "ui:title": "Badges"
+                },
+                "cite": {
+                    "items": {
+                        "$ref": "#/definitions/CiteEntry",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Cite"
+                    },
+                    "minItems": 1,
+                    "title": "cite",
+                    "type": "array",
+                    "ui:description": "A list of citation entries.\nEach entry contains a mandatory `text` field and either one or both of `doi` and `url`.\nE.g. the citation for the model architecture and/or the training data used.",
+                    "ui:title": "Cite"
+                },
+                "config": {
+                    "additionalProperties": {},
+                    "title": "config",
+                    "type": "object",
+                    "ui:description": "A custom configuration field that can contain any keys not present in the RDF spec. This means you should not store, for example, github repo URL in `config` since we already have the `git_repo` key defined in the spec.\nKeys in `config` may be very specific to a tool or consumer software. To avoid conflicted definitions, it is recommended to wrap configuration into a sub-field named with the specific domain or tool name, for example:\n\n```yaml\n   config:\n      bioimage_io:  # here is the domain name\n        my_custom_key: 3837283\n        another_key:\n           nested: value\n      imagej:\n        macro_dir: /path/to/macro/file\n```\nIf possible, please use [`snake_case`](https://en.wikipedia.org/wiki/Snake_case) for keys in `config`.\nFor example:\n```yaml\nconfig:\n  # custom config for DeepImageJ, see https://github.com/bioimage-io/configuration/issues/23\n  deepimagej:\n    model_keys:\n      # In principle the tag \"SERVING\" is used in almost every tf model\n      model_tag: tf.saved_model.tag_constants.SERVING\n      # Signature definition to call the model. Again \"SERVING\" is the most general\n      signature_definition: tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY\n    test_information:\n      input_size: [2048x2048] # Size of the input images\n      output_size: [1264x1264 ]# Size of all the outputs\n      device: cpu # Device used. In principle either cpu or GPU\n      memory_peak: 257.7 Mb # Maximum memory consumed by the model in the device\n      runtime: 78.8s # Time it took to run the model\n      pixel_size: [9.658E-4\u00b5mx9.658E-4\u00b5m] # Size of the pixels of the input\n```\n",
+                    "ui:title": "Config"
+                },
+                "covers": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "title": "covers",
+                    "type": "array",
+                    "ui:description": "A list of cover images provided by either a relative path to the model folder, or a hyperlink starting with 'http[s]'. Please use an image smaller than 500KB and an aspect ratio width to height of 2:1. The supported image formats are: 'jpg', 'png', 'gif'.",
+                    "ui:title": "Covers"
+                },
+                "description": {
+                    "title": "description",
+                    "type": "string",
+                    "ui:description": "A brief description.",
+                    "ui:title": "Description"
+                },
+                "documentation": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "download_url": {
+                    "title": "download_url",
+                    "type": "string",
+                    "ui:description": "optional url to download the resource from",
+                    "ui:title": "Download Url"
+                },
+                "format_version": {
+                    "enum": [
+                        "0.4.0",
+                        "0.4.1",
+                        "0.4.2",
+                        "0.4.3",
+                        "0.4.4",
+                        "0.4.5"
+                    ],
+                    "enumNames": [],
+                    "title": "format_version",
+                    "type": "string",
+                    "ui:description": "Version of the BioImage.IO Model Resource Description File Specification used.\nThis is mandatory, and important for the consumer software to verify before parsing the fields.\nThe recommended behavior for the implementation is to keep backward compatibility and throw an error if the model yaml\nis in an unsupported format version. The current format version described here is\n0.4.5",
+                    "ui:title": "Format Version"
+                },
+                "git_repo": {
+                    "title": "git_repo",
+                    "type": "string",
+                    "ui:description": "A url to the git repository, e.g. to Github or Gitlab.If the model is contained in a subfolder of a git repository, then a url to the exact folder(which contains the configuration yaml file) should be used.",
+                    "ui:title": "Git Repo"
+                },
+                "icon": {
+                    "title": "icon",
+                    "type": "string",
+                    "ui:description": "an icon for the resource",
+                    "ui:title": "Icon"
+                },
+                "id": {
+                    "title": "id",
+                    "type": "string",
+                    "ui:description": "Unique id within a collection of resources.",
+                    "ui:title": "Id"
+                },
+                "inputs": {
+                    "items": {
+                        "$ref": "#/definitions/InputTensor",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Inputs"
+                    },
+                    "minItems": 1,
+                    "title": "inputs",
+                    "type": "array",
+                    "ui:description": "Describes the input tensors expected by this model.",
+                    "ui:title": "Inputs"
+                },
+                "license": {
+                    "enum": [
+                        "bzip2-1.0.6",
+                        "Glulxe",
+                        "Parity-7.0.0",
+                        "OML",
+                        "UCL-1.0",
+                        "UPL-1.0",
+                        "BSD-Protection",
+                        "OCLC-2.0",
+                        "eCos-2.0",
+                        "Multics",
+                        "IPL-1.0",
+                        "IPA",
+                        "eGenix",
+                        "Glide",
+                        "Entessa",
+                        "FSFUL",
+                        "Nunit",
+                        "MPL-2.0-no-copyleft-exception",
+                        "libpng-2.0",
+                        "OLDAP-2.2.1",
+                        "curl",
+                        "ANTLR-PD",
+                        "CC-BY-SA-2.0",
+                        "LiLiQ-P-1.1",
+                        "TCP-wrappers",
+                        "Unicode-DFS-2016",
+                        "ODbL-1.0",
+                        "LPPL-1.3a",
+                        "CERN-OHL-1.2",
+                        "ADSL",
+                        "CDDL-1.0",
+                        "Motosoto",
+                        "BUSL-1.1",
+                        "OGL-UK-1.0",
+                        "xinetd",
+                        "Imlib2",
+                        "SNIA",
+                        "OGTSL",
+                        "TMate",
+                        "OCCT-PL",
+                        "GPL-1.0-or-later",
+                        "YPL-1.1",
+                        "CECILL-2.0",
+                        "PHP-3.0",
+                        "BlueOak-1.0.0",
+                        "Zimbra-1.3",
+                        "OGC-1.0",
+                        "NASA-1.3",
+                        "SPL-1.0",
+                        "Intel-ACPI",
+                        "SISSL-1.2",
+                        "OGL-Canada-2.0",
+                        "CC-BY-3.0-US",
+                        "copyleft-next-0.3.1",
+                        "GFDL-1.1-invariants-or-later",
+                        "GL2PS",
+                        "MS-PL",
+                        "SCEA",
+                        "CC-BY-ND-2.5",
+                        "SSPL-1.0",
+                        "Spencer-86",
+                        "LPPL-1.0",
+                        "GPL-3.0-only",
+                        "GPL-2.0-with-autoconf-exception",
+                        "Giftware",
+                        "CC-BY-NC-ND-3.0",
+                        "CNRI-Python",
+                        "GFDL-1.2-no-invariants-or-later",
+                        "Afmparse",
+                        "BSD-3-Clause-LBNL",
+                        "NCGL-UK-2.0",
+                        "GPL-1.0+",
+                        "PHP-3.01",
+                        "Leptonica",
+                        "bzip2-1.0.5",
+                        "NIST-PD-fallback",
+                        "OSL-1.0",
+                        "OFL-1.1",
+                        "JasPer-2.0",
+                        "Naumen",
+                        "AGPL-1.0-only",
+                        "C-UDA-1.0",
+                        "MIT",
+                        "TCL",
+                        "LGPL-3.0-only",
+                        "ECL-1.0",
+                        "MPL-2.0",
+                        "CC-BY-NC-1.0",
+                        "CC-BY-NC-ND-2.5",
+                        "LPPL-1.3c",
+                        "JSON",
+                        "NBPL-1.0",
+                        "CAL-1.0-Combined-Work-Exception",
+                        "Unlicense",
+                        "CNRI-Python-GPL-Compatible",
+                        "TU-Berlin-2.0",
+                        "NLPL",
+                        "LGPL-3.0-or-later",
+                        "Beerware",
+                        "NGPL",
+                        "ZPL-2.1",
+                        "Saxpath",
+                        "CC-BY-SA-2.0-UK",
+                        "CECILL-2.1",
+                        "XFree86-1.1",
+                        "IBM-pibs",
+                        "Zlib",
+                        "StandardML-NJ",
+                        "RPSL-1.0",
+                        "CECILL-1.0",
+                        "OGL-UK-3.0",
+                        "BSD-4-Clause-Shortened",
+                        "Watcom-1.0",
+                        "Wsuipa",
+                        "TU-Berlin-1.0",
+                        "Latex2e",
+                        "CECILL-B",
+                        "EUPL-1.0",
+                        "GFDL-1.2-or-later",
+                        "CPL-1.0",
+                        "CC-BY-ND-3.0",
+                        "NTP",
+                        "W3C-19980720",
+                        "GFDL-1.3-only",
+                        "CC-BY-SA-4.0",
+                        "EUPL-1.1",
+                        "GFDL-1.1-no-invariants-only",
+                        "JPNIC",
+                        "AMPAS",
+                        "BSD-3-Clause",
+                        "MIT-0",
+                        "Intel",
+                        "O-UDA-1.0",
+                        "NPL-1.0",
+                        "CC-BY-NC-2.5",
+                        "Mup",
+                        "Newsletr",
+                        "PDDL-1.0",
+                        "SMLNJ",
+                        "BSD-1-Clause",
+                        "SimPL-2.0",
+                        "OLDAP-1.2",
+                        "Xnet",
+                        "BSD-2-Clause",
+                        "AML",
+                        "GFDL-1.2-only",
+                        "Info-ZIP",
+                        "DSDP",
+                        "AGPL-1.0",
+                        "BSD-4-Clause-UC",
+                        "LGPL-2.1-only",
+                        "OFL-1.0",
+                        "CDL-1.0",
+                        "LAL-1.3",
+                        "Sendmail",
+                        "OGDL-Taiwan-1.0",
+                        "Zimbra-1.4",
+                        "Borceux",
+                        "OSL-3.0",
+                        "AMDPLPA",
+                        "CC-BY-NC-SA-3.0",
+                        "OLDAP-2.1",
+                        "BSD-2-Clause-FreeBSD",
+                        "CPOL-1.02",
+                        "MPL-1.0",
+                        "blessing",
+                        "Parity-6.0.0",
+                        "AFL-3.0",
+                        "SGI-B-1.0",
+                        "BSD-2-Clause-Patent",
+                        "Artistic-1.0-cl8",
+                        "CC-BY-NC-ND-4.0",
+                        "Apache-1.1",
+                        "ErlPL-1.1",
+                        "OFL-1.0-RFN",
+                        "CC-BY-NC-3.0",
+                        "CC-BY-NC-2.0",
+                        "MakeIndex",
+                        "Barr",
+                        "CC-BY-SA-2.1-JP",
+                        "GFDL-1.2-no-invariants-only",
+                        "Hippocratic-2.1",
+                        "Adobe-2006",
+                        "OSL-2.0",
+                        "CC-BY-NC-SA-4.0",
+                        "LGPL-2.1-or-later",
+                        "PolyForm-Noncommercial-1.0.0",
+                        "OpenSSL",
+                        "GPL-3.0-with-GCC-exception",
+                        "OPL-1.0",
+                        "BSD-3-Clause-Attribution",
+                        "Rdisc",
+                        "MS-RL",
+                        "EUDatagrid",
+                        "LGPLLR",
+                        "AFL-2.0",
+                        "MIT-Modern-Variant",
+                        "GFDL-1.3-invariants-only",
+                        "LiLiQ-R-1.1",
+                        "CDLA-Permissive-1.0",
+                        "DRL-1.0",
+                        "BSD-Source-Code",
+                        "CC-BY-NC-ND-1.0",
+                        "GLWTPL",
+                        "VSL-1.0",
+                        "CPAL-1.0",
+                        "HaskellReport",
+                        "APSL-1.1",
+                        "GPL-2.0-or-later",
+                        "BSD-3-Clause-Modification",
+                        "OLDAP-2.3",
+                        "OFL-1.1-no-RFN",
+                        "BitTorrent-1.0",
+                        "NRL",
+                        "GFDL-1.2",
+                        "MirOS",
+                        "Sleepycat",
+                        "LPPL-1.1",
+                        "WTFPL",
+                        "PolyForm-Small-Business-1.0.0",
+                        "Caldera",
+                        "HTMLTIDY",
+                        "SISSL",
+                        "MITNFA",
+                        "0BSD",
+                        "CC0-1.0",
+                        "LGPL-3.0+",
+                        "CDLA-Sharing-1.0",
+                        "GPL-2.0-with-bison-exception",
+                        "EFL-2.0",
+                        "AFL-1.1",
+                        "CC-BY-2.0",
+                        "RPL-1.5",
+                        "MulanPSL-1.0",
+                        "GPL-3.0+",
+                        "HPND-sell-variant",
+                        "SSH-OpenSSH",
+                        "OLDAP-1.1",
+                        "BitTorrent-1.1",
+                        "Artistic-1.0",
+                        "SSH-short",
+                        "CC-BY-3.0-AT",
+                        "MIT-CMU",
+                        "GFDL-1.3-no-invariants-or-later",
+                        "TOSL",
+                        "MIT-open-group",
+                        "OLDAP-2.6",
+                        "GFDL-1.1-only",
+                        "FreeBSD-DOC",
+                        "GPL-2.0",
+                        "Fair",
+                        "CECILL-1.1",
+                        "QPL-1.0",
+                        "DOC",
+                        "LAL-1.2",
+                        "LPL-1.02",
+                        "CERN-OHL-P-2.0",
+                        "etalab-2.0",
+                        "FTL",
+                        "Qhull",
+                        "BSD-3-Clause-Clear",
+                        "BSD-3-Clause-No-Military-License",
+                        "FSFAP",
+                        "APL-1.0",
+                        "OLDAP-2.8",
+                        "TORQUE-1.1",
+                        "Sendmail-8.23",
+                        "diffmark",
+                        "Frameworx-1.0",
+                        "zlib-acknowledgement",
+                        "EFL-1.0",
+                        "IJG",
+                        "GFDL-1.3-no-invariants-only",
+                        "Noweb",
+                        "GFDL-1.3",
+                        "LGPL-2.1",
+                        "gSOAP-1.3b",
+                        "OFL-1.1-RFN",
+                        "GPL-3.0-with-autoconf-exception",
+                        "CERN-OHL-1.1",
+                        "AFL-2.1",
+                        "MIT-enna",
+                        "Adobe-Glyph",
+                        "EPL-1.0",
+                        "Xerox",
+                        "OLDAP-2.0.1",
+                        "MTLL",
+                        "ImageMagick",
+                        "psutils",
+                        "ClArtistic",
+                        "GFDL-1.3-invariants-or-later",
+                        "APSL-1.2",
+                        "Apache-2.0",
+                        "NIST-PD",
+                        "Libpng",
+                        "TAPR-OHL-1.0",
+                        "ICU",
+                        "CC-BY-SA-2.5",
+                        "CC-PDDC",
+                        "AGPL-3.0-only",
+                        "OSL-1.1",
+                        "SugarCRM-1.1.3",
+                        "FreeImage",
+                        "W3C-20150513",
+                        "D-FSL-1.0",
+                        "RSA-MD",
+                        "CC-BY-ND-2.0",
+                        "GPL-2.0-with-GCC-exception",
+                        "AGPL-3.0-or-later",
+                        "AGPL-1.0-or-later",
+                        "iMatix",
+                        "Plexus",
+                        "OFL-1.0-no-RFN",
+                        "NAIST-2003",
+                        "MIT-feh",
+                        "ECL-2.0",
+                        "CC-BY-2.5",
+                        "XSkat",
+                        "Linux-OpenIB",
+                        "Spencer-99",
+                        "BSD-3-Clause-No-Nuclear-License-2014",
+                        "CC-BY-NC-ND-3.0-IGO",
+                        "CC-BY-NC-SA-1.0",
+                        "GPL-2.0-with-font-exception",
+                        "Crossword",
+                        "OLDAP-2.2.2",
+                        "BSD-2-Clause-NetBSD",
+                        "GPL-2.0+",
+                        "CC-BY-4.0",
+                        "OLDAP-2.0",
+                        "NOSL",
+                        "CDDL-1.1",
+                        "APSL-1.0",
+                        "EUPL-1.2",
+                        "Nokia",
+                        "RHeCos-1.1",
+                        "GPL-2.0-only",
+                        "OLDAP-2.7",
+                        "Vim",
+                        "SAX-PD",
+                        "BSD-3-Clause-No-Nuclear-Warranty",
+                        "NetCDF",
+                        "dvipdfm",
+                        "SHL-0.5",
+                        "LGPL-2.0-only",
+                        "AAL",
+                        "Unicode-TOU",
+                        "LPPL-1.2",
+                        "xpp",
+                        "SHL-0.51",
+                        "NCSA",
+                        "LGPL-2.0-or-later",
+                        "CC-BY-3.0",
+                        "GPL-1.0",
+                        "W3C",
+                        "Aladdin",
+                        "BSD-3-Clause-No-Nuclear-License",
+                        "GFDL-1.1-or-later",
+                        "SMPPL",
+                        "GFDL-1.1",
+                        "OLDAP-1.4",
+                        "Condor-1.1",
+                        "GPL-1.0-only",
+                        "GPL-3.0",
+                        "PSF-2.0",
+                        "Apache-1.0",
+                        "EPL-2.0",
+                        "Python-2.0",
+                        "OLDAP-2.4",
+                        "PostgreSQL",
+                        "Net-SNMP",
+                        "Ruby",
+                        "OSET-PL-2.1",
+                        "Dotseqn",
+                        "CUA-OPL-1.0",
+                        "Bahyph",
+                        "LiLiQ-Rplus-1.1",
+                        "LGPL-2.0+",
+                        "wxWindows",
+                        "AGPL-3.0",
+                        "Abstyles",
+                        "OLDAP-1.3",
+                        "NTP-0",
+                        "OLDAP-2.2",
+                        "CC-BY-SA-3.0",
+                        "SWL",
+                        "BSD-3-Clause-Open-MPI",
+                        "LGPL-2.1+",
+                        "GFDL-1.2-invariants-only",
+                        "Zend-2.0",
+                        "GFDL-1.1-no-invariants-or-later",
+                        "mpich2",
+                        "NLOD-1.0",
+                        "gnuplot",
+                        "CERN-OHL-S-2.0",
+                        "OGL-UK-2.0",
+                        "NPL-1.1",
+                        "Zed",
+                        "VOSTROM",
+                        "ZPL-2.0",
+                        "CERN-OHL-W-2.0",
+                        "CC-BY-NC-SA-2.0",
+                        "APSL-2.0",
+                        "LPL-1.0",
+                        "ANTLR-PD-fallback",
+                        "libtiff",
+                        "HPND",
+                        "GPL-3.0-or-later",
+                        "Artistic-2.0",
+                        "Unicode-DFS-2015",
+                        "CC-BY-NC-4.0",
+                        "RPL-1.1",
+                        "CC-BY-SA-1.0",
+                        "Cube",
+                        "ODC-By-1.0",
+                        "copyleft-next-0.3.0",
+                        "CC-BY-ND-4.0",
+                        "ZPL-1.1",
+                        "GFDL-1.3-or-later",
+                        "CATOSL-1.1",
+                        "GPL-2.0-with-classpath-exception",
+                        "LGPL-2.0",
+                        "BSD-2-Clause-Views",
+                        "BSL-1.0",
+                        "CNRI-Jython",
+                        "Eurosym",
+                        "CC-BY-SA-3.0-AT",
+                        "CECILL-C",
+                        "EPICS",
+                        "CC-BY-NC-ND-2.0",
+                        "GD",
+                        "X11",
+                        "MPL-1.1",
+                        "GFDL-1.1-invariants-only",
+                        "psfrag",
+                        "RSCPL",
+                        "YPL-1.0",
+                        "SGI-B-1.1",
+                        "CC-BY-ND-1.0",
+                        "SGI-B-2.0",
+                        "APAFML",
+                        "Spencer-94",
+                        "ISC",
+                        "MIT-advertising",
+                        "GFDL-1.2-invariants-or-later",
+                        "CC-BY-NC-SA-2.5",
+                        "CC-BY-1.0",
+                        "OSL-2.1",
+                        "CrystalStacker",
+                        "FSFULLR",
+                        "libselinux-1.0",
+                        "MulanPSL-2.0",
+                        "LGPL-3.0",
+                        "OLDAP-2.5",
+                        "Artistic-1.0-Perl",
+                        "AFL-1.2",
+                        "CAL-1.0",
+                        "BSD-4-Clause",
+                        "Interbase-1.0",
+                        "NPOSL-3.0"
+                    ],
+                    "enumNames": [],
+                    "title": "license",
+                    "type": "string",
+                    "ui:description": "A [SPDX license identifier](https://spdx.org/licenses/)(e.g. `CC-BY-4.0`, `MIT`, `BSD-2-Clause`). We don't support custom license beyond the SPDX license list, if you need that please send an Github issue to discuss your intentions with the community.",
+                    "ui:title": "License"
+                },
+                "links": {
+                    "items": {
+                        "title": "links",
+                        "type": "string",
+                        "ui:description": "",
+                        "ui:title": "Links"
+                    },
+                    "title": "links",
+                    "type": "array",
+                    "ui:description": "links to other bioimage.io resources",
+                    "ui:title": "Links"
+                },
+                "maintainers": {
+                    "items": {
+                        "$ref": "#/definitions/Maintainer",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Maintainers"
+                    },
+                    "title": "maintainers",
+                    "type": "array",
+                    "ui:description": "Maintainers of this resource.",
+                    "ui:title": "Maintainers"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Name of this model. It should be human-readable and only contain letters, numbers, underscore '_', minus '-' or spaces and not be longer than 64 characters.",
+                    "ui:title": "Name"
+                },
+                "outputs": {
+                    "items": {
+                        "$ref": "#/definitions/OutputTensor",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Outputs"
+                    },
+                    "minItems": 1,
+                    "title": "outputs",
+                    "type": "array",
+                    "ui:description": "Describes the output tensors from this model.",
+                    "ui:title": "Outputs"
+                },
+                "packaged_by": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Packaged By"
+                    },
+                    "title": "packaged_by",
+                    "type": "array",
+                    "ui:description": "The persons that have packaged and uploaded this model. Only needs to be specified if different from `authors` in root or any entry in `weights`.",
+                    "ui:title": "Packaged By"
+                },
+                "parent": {
+                    "$ref": "#/definitions/ModelParent",
+                    "type": "object",
+                    "ui:description": "The model from which this model is derived, e.g. by fine-tuning the weights.",
+                    "ui:title": "Parent"
+                },
+                "rdf_source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "run_mode": {
+                    "$ref": "#/definitions/RunMode",
+                    "type": "object",
+                    "ui:description": "Custom run mode for this model: for more complex prediction procedures like test time data augmentation that currently cannot be expressed in the specification. No standard run modes are defined yet.",
+                    "ui:title": "Run Mode"
+                },
+                "sample_inputs": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "minItems": 1,
+                    "title": "sample_inputs",
+                    "type": "array",
+                    "ui:description": "List of URIs/local relative paths to sample inputs to illustrate possible inputs for the model, for example stored as png or tif images. The model is not tested with these sample files that serve to inform a human user about an example use case.",
+                    "ui:title": "Sample Inputs"
+                },
+                "sample_outputs": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "minItems": 1,
+                    "title": "sample_outputs",
+                    "type": "array",
+                    "ui:description": "List of URIs/local relative paths to sample outputs corresponding to the `sample_inputs`.",
+                    "ui:title": "Sample Outputs"
+                },
+                "tags": {
+                    "items": {
+                        "title": "tags",
+                        "type": "string",
+                        "ui:description": "",
+                        "ui:title": "Tags"
+                    },
+                    "title": "tags",
+                    "type": "array",
+                    "ui:description": "A list of tags.",
+                    "ui:title": "Tags"
+                },
+                "test_inputs": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "minItems": 1,
+                    "title": "test_inputs",
+                    "type": "array",
+                    "ui:description": "List of URIs or local relative paths to test inputs as described in inputs for **a single test case**. This means if your model has more than one input, you should provide one URI for each input.Each test input should be a file with a ndarray in [numpy.lib file format](https://numpy.org/doc/stable/reference/generated/numpy.lib.format.html#module-numpy.lib.format).The extension must be '.npy'.",
+                    "ui:title": "Test Inputs"
+                },
+                "test_outputs": {
+                    "items": {
+                        "title": "",
+                        "type": "string",
+                        "ui:description": ""
+                    },
+                    "minItems": 1,
+                    "title": "test_outputs",
+                    "type": "array",
+                    "ui:description": "Analog to test_inputs.",
+                    "ui:title": "Test Outputs"
+                },
+                "timestamp": {
+                    "format": "date-time",
+                    "title": "timestamp",
+                    "type": "string",
+                    "ui:description": "Timestamp of the initial creation of this model in [ISO 8601](#https://en.wikipedia.org/wiki/ISO_8601) format.",
+                    "ui:title": "Timestamp"
+                },
+                "training_data": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Dataset",
+                            "type": "object",
+                            "ui:description": ""
+                        },
+                        {
+                            "$ref": "#/definitions/LinkedDataset",
+                            "type": "object",
+                            "ui:description": ""
+                        }
+                    ]
+                },
+                "type": {
+                    "title": "type",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Type"
+                },
+                "version": {
+                    "title": "version",
+                    "type": "string",
+                    "ui:description": "The version number of the resource. The version number format must be a string in `MAJOR.MINOR.PATCH` format following the guidelines in Semantic Versioning 2.0.0 (see https://semver.org/), e.g. the initial version number should be `0.1.0`.",
+                    "ui:title": "Version"
+                },
+                "weights": {
+                    "additionalProperties": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/KerasHdf5WeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            },
+                            {
+                                "$ref": "#/definitions/OnnxWeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            },
+                            {
+                                "$ref": "#/definitions/PytorchStateDictWeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            },
+                            {
+                                "$ref": "#/definitions/TensorflowJsWeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            },
+                            {
+                                "$ref": "#/definitions/TensorflowSavedModelBundleWeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            },
+                            {
+                                "$ref": "#/definitions/TorchscriptWeightsEntry",
+                                "type": "object",
+                                "ui:description": ""
+                            }
+                        ]
+                    },
+                    "title": "weights",
+                    "type": "object",
+                    "ui:description": "",
+                    "ui:title": "Weights"
+                }
+            },
+            "required": [
+                "authors",
+                "cite",
+                "description",
+                "documentation",
+                "format_version",
+                "inputs",
+                "license",
+                "name",
+                "test_inputs",
+                "test_outputs",
+                "timestamp",
+                "type",
+                "weights"
+            ],
+            "type": "object"
+        },
+        "ModelParent": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "enum": [
+                        "10.5281/zenodo.5847355/6322908",
+                        "fiji/N2VSEMDemo",
+                        "10.5281/zenodo.6200999/6201000",
+                        "10.5281/zenodo.5869899/5869900",
+                        "10.5281/zenodo.5764892/6322939",
+                        "10.5281/zenodo.6028097/6028098",
+                        "10.5281/zenodo.6028097",
+                        "10.5281/zenodo.5847355",
+                        "10.5281/zenodo.5749843/5888237",
+                        "hpa/HPAShuffleNetV2",
+                        "10.5281/zenodo.5847355/5847356",
+                        "hpa/HPAShuffleNetV2/latest",
+                        "10.5281/zenodo.5910163/5942853",
+                        "10.5281/zenodo.5910163",
+                        "10.5281/zenodo.5749843",
+                        "hpa/HPA-bestfitting/latest",
+                        "10.5281/zenodo.5869899/6321179",
+                        "10.5281/zenodo.5749843/5877226",
+                        "10.5281/zenodo.6200635/6200636",
+                        "10.5281/zenodo.6200635",
+                        "10.5281/zenodo.5874841",
+                        "10.5281/zenodo.5847355/5874728",
+                        "10.5281/zenodo.5869899",
+                        "10.5281/zenodo.5817052/5906839",
+                        "10.5281/zenodo.6028280",
+                        "hpa/HPA-bestfitting",
+                        "10.5281/zenodo.5817052",
+                        "10.5281/zenodo.6200999",
+                        "10.5281/zenodo.5817052/5850574",
+                        "10.5281/zenodo.5764892",
+                        "10.5281/zenodo.5874841/5874842",
+                        "10.5281/zenodo.5874741/5874742",
+                        "fiji/N2VSEMDemo/latest",
+                        "10.5281/zenodo.5914248",
+                        "10.5281/zenodo.5914248/5914249",
+                        "10.5281/zenodo.5874741",
+                        "10.5281/zenodo.6028280/6028281"
+                    ],
+                    "enumNames": [],
+                    "title": "id",
+                    "type": "string",
+                    "ui:description": "ID as shown on resource card on bioimage.io",
+                    "ui:title": "Id"
+                },
+                "sha256": {
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "Hash of the parent model RDF. Note: the hash is not validated",
+                    "ui:title": "Sha256"
+                },
+                "uri": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                }
+            },
+            "type": "object"
+        },
+        "OnnxWeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "opset_version": {
+                    "title": "opset_version",
+                    "type": "integer",
+                    "ui:description": "",
+                    "ui:title": "Opset Version"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "weights_format": {
+                    "enum": [
+                        "onnx"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        },
+        "OutputTensor": {
+            "additionalProperties": false,
+            "properties": {
+                "axes": {
+                    "title": "axes",
+                    "type": "string",
+                    "ui:description": "Axes identifying characters from: bitczyx. Same length and order as the axes in `shape`.\n\n| character | description |\n| --- | --- |\n|  b  |  batch (groups multiple samples) |\n|  i  |  instance/index/element |\n|  t  |  time |\n|  c  |  channel |\n|  z  |  spatial dimension z |\n|  y  |  spatial dimension y |\n|  x  |  spatial dimension x |",
+                    "ui:title": "Axes"
+                },
+                "data_range": {
+                    "items": [
+                        {
+                            "format": "float",
+                            "title": "data_range",
+                            "type": "number",
+                            "ui:description": "",
+                            "ui:title": "Data Range"
+                        },
+                        {
+                            "format": "float",
+                            "title": "data_range",
+                            "type": "number",
+                            "ui:description": "",
+                            "ui:title": "Data Range"
+                        }
+                    ],
+                    "type": "array"
+                },
+                "data_type": {
+                    "title": "data_type",
+                    "type": "string",
+                    "ui:description": "The data type of this tensor. For inputs, only `float32` is allowed and the consumer software needs to ensure that the correct data type is passed here. For outputs can be any of `float32, float64, (u)int8, (u)int16, (u)int32, (u)int64`. The data flow in bioimage.io models is explained [in this diagram.](https://docs.google.com/drawings/d/1FTw8-Rn6a6nXdkZ_SkMumtcjvur9mtIhRqLwnKqZNHM/edit).",
+                    "ui:title": "Data Type"
+                },
+                "description": {
+                    "title": "description",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Description"
+                },
+                "halo": {
+                    "items": {
+                        "title": "halo",
+                        "type": "integer",
+                        "ui:description": "",
+                        "ui:title": "Halo"
+                    },
+                    "title": "halo",
+                    "type": "array",
+                    "ui:description": "The halo to crop from the output tensor (for example to crop away boundary effects or for tiling). The halo should be cropped from both sides, i.e. `shape_after_crop = shape - 2 * halo`. The `halo` is not cropped by the bioimage.io model, but is left to be cropped by the consumer software. Use `shape:offset` if the model output itself is cropped and input and output shapes not fixed.",
+                    "ui:title": "Halo"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Tensor name. No duplicates are allowed.",
+                    "ui:title": "Name"
+                },
+                "postprocessing": {
+                    "items": {
+                        "$ref": "#/definitions/Postprocessing",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Postprocessing"
+                    },
+                    "title": "postprocessing",
+                    "type": "array",
+                    "ui:description": "Description of how this output should be postprocessed.",
+                    "ui:title": "Postprocessing"
+                },
+                "shape": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "title": "",
+                                "type": "integer",
+                                "ui:description": ""
+                            },
+                            "title": "",
+                            "type": "array",
+                            "ui:description": ""
+                        },
+                        {
+                            "$ref": "#/definitions/ImplicitOutputShape",
+                            "type": "object",
+                            "ui:description": "In reference to the shape of an input tensor, the shape of the output tensor is `shape = shape(input_tensor) * scale + 2 * offset`."
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "axes",
+                "data_type",
+                "name",
+                "shape"
+            ],
+            "type": "object"
+        },
+        "ParametrizedInputShape": {
+            "additionalProperties": false,
+            "properties": {
+                "min": {
+                    "items": {
+                        "title": "min",
+                        "type": "integer",
+                        "ui:description": "",
+                        "ui:title": "Min"
+                    },
+                    "title": "min",
+                    "type": "array",
+                    "ui:description": "The minimum input shape with same length as `axes`",
+                    "ui:title": "Min"
+                },
+                "step": {
+                    "items": {
+                        "title": "step",
+                        "type": "integer",
+                        "ui:description": "",
+                        "ui:title": "Step"
+                    },
+                    "title": "step",
+                    "type": "array",
+                    "ui:description": "The minimum shape change with same length as `axes`",
+                    "ui:title": "Step"
+                }
+            },
+            "required": [
+                "min",
+                "step"
+            ],
+            "type": "object"
+        },
+        "Postprocessing": {
+            "additionalProperties": false,
+            "properties": {
+                "kwargs": {
+                    "additionalProperties": {},
+                    "title": "kwargs",
+                    "type": "object",
+                    "ui:description": "Key word arguments as described in [postprocessing spec](https://github.com/bioimage-io/spec-bioimage-io/blob/gh-pages/postprocessing_spec_0_4.md).",
+                    "ui:title": "Kwargs"
+                },
+                "name": {
+                    "enum": [
+                        "binarize",
+                        "clip",
+                        "scale_linear",
+                        "sigmoid",
+                        "zero_mean_unit_variance",
+                        "scale_range",
+                        "scale_mean_variance"
+                    ],
+                    "enumNames": [],
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Name of postprocessing. One of: binarize, clip, scale_linear, sigmoid, zero_mean_unit_variance, scale_range, scale_mean_variance.",
+                    "ui:title": "Name"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "Preprocessing": {
+            "additionalProperties": false,
+            "properties": {
+                "kwargs": {
+                    "additionalProperties": {},
+                    "title": "kwargs",
+                    "type": "object",
+                    "ui:description": "Key word arguments as described in [preprocessing spec](https://github.com/bioimage-io/spec-bioimage-io/blob/gh-pages/preprocessing_spec_0_4.md).",
+                    "ui:title": "Kwargs"
+                },
+                "name": {
+                    "enum": [
+                        "binarize",
+                        "clip",
+                        "scale_linear",
+                        "sigmoid",
+                        "zero_mean_unit_variance",
+                        "scale_range"
+                    ],
+                    "enumNames": [],
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "Name of preprocessing. One of: binarize, clip, scale_linear, sigmoid, zero_mean_unit_variance, scale_range.",
+                    "ui:title": "Name"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "PytorchStateDictWeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "architecture": {
+                    "title": "architecture",
+                    "type": "string",
+                    "ui:description": "Source code of the model architecture that either points to a local implementation: `<relative path to file>:<identifier of implementation within the file>` or the implementation in an available dependency: `<root-dependency>.<sub-dependency>.<identifier>`.\nFor example: `my_function.py:MyImplementation` or `bioimageio.core.some_module.some_class_or_function`.",
+                    "ui:title": "Architecture"
+                },
+                "architecture_sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "architecture_sha256",
+                    "type": "string",
+                    "ui:description": "This field is only required if the architecture points to a source file. SHA256 checksum of the model source code file.You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Architecture Sha256"
+                },
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "kwargs": {
+                    "additionalProperties": {},
+                    "title": "kwargs",
+                    "type": "object",
+                    "ui:description": "Keyword arguments for the implementation specified by `architecture`.",
+                    "ui:title": "Kwargs"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "pytorch_version": {
+                    "title": "pytorch_version",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Pytorch Version"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "weights_format": {
+                    "enum": [
+                        "pytorch_state_dict"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "architecture",
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        },
+        "RunMode": {
+            "additionalProperties": false,
+            "properties": {
+                "kwargs": {
+                    "additionalProperties": {},
+                    "title": "kwargs",
+                    "type": "object",
+                    "ui:description": "Key word arguments.",
+                    "ui:title": "Kwargs"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string",
+                    "ui:description": "The name of the `run_mode`",
+                    "ui:title": "Name"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "TensorflowJsWeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "tensorflow_version": {
+                    "title": "tensorflow_version",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Tensorflow Version"
+                },
+                "weights_format": {
+                    "enum": [
+                        "tensorflow_js"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        },
+        "TensorflowSavedModelBundleWeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "tensorflow_version": {
+                    "title": "tensorflow_version",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Tensorflow Version"
+                },
+                "weights_format": {
+                    "enum": [
+                        "tensorflow_saved_model_bundle"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        },
+        "TorchscriptWeightsEntry": {
+            "additionalProperties": false,
+            "properties": {
+                "attachments": {
+                    "additionalProperties": {
+                        "items": {
+                            "title": "",
+                            "type": "string",
+                            "ui:description": ""
+                        },
+                        "title": "attachments",
+                        "type": "array",
+                        "ui:description": "",
+                        "ui:title": "Attachments"
+                    },
+                    "title": "attachments",
+                    "type": "object",
+                    "ui:description": "Dictionary of text keys and list values (that may contain any valid yaml) to additional, relevant files that are specific to the current weight format. A list of URIs can be listed under the `files` key to included additional files for generating the model package.",
+                    "ui:title": "Attachments"
+                },
+                "authors": {
+                    "items": {
+                        "$ref": "#/definitions/Author",
+                        "type": "object",
+                        "ui:description": "",
+                        "ui:title": "Authors"
+                    },
+                    "title": "authors",
+                    "type": "array",
+                    "ui:description": "A list of authors. If this is the root weight (it does not have a `parent` field): the person(s) that have trained this model. If this is a child weight (it has a `parent` field): the person(s) who have converted the weights to this format.",
+                    "ui:title": "Authors"
+                },
+                "dependencies": {
+                    "title": "dependencies",
+                    "type": "string",
+                    "ui:description": "Dependency manager and dependency file, specified as `<dependency manager>:<relative path to file>`. For example: 'conda:./environment.yaml', 'maven:./pom.xml', or 'pip:./requirements.txt'. These dependencies are only used for the specified weight format.",
+                    "ui:title": "Dependencies"
+                },
+                "parent": {
+                    "title": "parent",
+                    "type": "string",
+                    "ui:description": "The source weights used as input for converting the weights to this format. For example, if the weights were converted from the format `pytorch_state_dict` to `pytorch_script`, the parent is `pytorch_state_dict`. All weight entries except one (the initial set of weights resulting from training the model), need to have this field.",
+                    "ui:title": "Parent"
+                },
+                "pytorch_version": {
+                    "title": "pytorch_version",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Pytorch Version"
+                },
+                "sha256": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "title": "sha256",
+                    "type": "string",
+                    "ui:description": "SHA256 checksum of the source file specified. You can drag and drop your file to this [online tool](http://emn178.github.io/online-tools/sha256_checksum.html) to generate it in your browser. Or you can generate the SHA256 code for your model and weights by using for example, `hashlib` in Python. [here is a codesnippet](https://gist.github.com/FynnBe/e64460463df89439cff218bbf59c1100).",
+                    "ui:title": "Sha256"
+                },
+                "source": {
+                    "title": "",
+                    "type": "string",
+                    "ui:description": ""
+                },
+                "weights_format": {
+                    "enum": [
+                        "torchscript"
+                    ],
+                    "title": "weights_format",
+                    "type": "string",
+                    "ui:description": "",
+                    "ui:title": "Weights Format"
+                }
+            },
+            "required": [
+                "source",
+                "weights_format"
+            ],
+            "type": "object"
+        }
+    }
+}

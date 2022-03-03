@@ -1,0 +1,118 @@
+{
+    "attachments": {
+        "ui:description": "Additional unknown keys are allowed.",
+        "ui:title": "Attachments"
+    },
+    "authors": {
+        "ui:description": "A list of authors. The authors are the creators of the specifications and the primary points of contact.",
+        "ui:title": "Authors"
+    },
+    "badges": {
+        "ui:description": "a list of badges",
+        "ui:title": "Badges"
+    },
+    "cite": {
+        "ui:description": "A list of citation entries.\nEach entry contains a mandatory `text` field and either one or both of `doi` and `url`.\nE.g. the citation for the model architecture and/or the training data used.",
+        "ui:title": "Cite"
+    },
+    "config": {
+        "ui:description": "",
+        "ui:title": "Config"
+    },
+    "covers": {
+        "ui:description": "A list of cover images provided by either a relative path to the model folder, or a hyperlink starting with 'http[s]'. Please use an image smaller than 500KB and an aspect ratio width to height of 2:1. The supported image formats are: 'jpg', 'png', 'gif'.",
+        "ui:title": "Covers"
+    },
+    "description": {
+        "ui:description": "A brief description.",
+        "ui:title": "Description"
+    },
+    "documentation": {
+        "ui:description": "URL of markdown file with additional documentation.",
+        "ui:title": "Documentation"
+    },
+    "download_url": {
+        "ui:description": "optional url to download the resource from",
+        "ui:title": "Download Url"
+    },
+    "format_version": {
+        "ui:default": "0.2.2",
+        "ui:description": "Version of the BioImage.IO Resource Description File Specification used.The current general format version described here is 0.2.2. Note: The general RDF format is not to be confused with specialized RDF format like the Model RDF format.",
+        "ui:title": "Format Version"
+    },
+    "git_repo": {
+        "ui:description": "A url to the git repository, e.g. to Github or Gitlab.",
+        "ui:title": "Git Repo"
+    },
+    "icon": {
+        "ui:description": "an icon for the resource",
+        "ui:title": "Icon"
+    },
+    "id": {
+        "ui:description": "Unique id within a collection of resources.",
+        "ui:title": "Id"
+    },
+    "license": {
+        "ui:description": "A [SPDX license identifier](https://spdx.org/licenses/)(e.g. `CC-BY-4.0`, `MIT`, `BSD-2-Clause`). We don't support custom license beyond the SPDX license list, if you need that please send an Github issue to discuss your intentions with the community.",
+        "ui:title": "License"
+    },
+    "links": {
+        "ui:description": "links to other bioimage.io resources",
+        "ui:title": "Links"
+    },
+    "maintainers": {
+        "ui:description": "Maintainers of this resource.",
+        "ui:title": "Maintainers"
+    },
+    "name": {
+        "ui:autofocus": true,
+        "ui:description": "name of the resource, a human-friendly name",
+        "ui:placeholder": "My Resource",
+        "ui:title": "Resource name"
+    },
+    "rdf_source": {
+        "ui:description": "url or doi to the source of the resource definition",
+        "ui:title": "Rdf Source",
+        "ui:widget": "hidden"
+    },
+    "source": {
+        "ui:description": "url or local relative path to the source of the resource",
+        "ui:title": "Source"
+    },
+    "tags": {
+        "ui:description": "A list of tags.",
+        "ui:title": "Tags"
+    },
+    "type": {
+        "ui:description": "",
+        "ui:title": "Type"
+    },
+    "ui:order": [
+        "name",
+        "description",
+        "documentation",
+        "type",
+        "authors",
+        "cite",
+        "tags",
+        "links",
+        "covers",
+        "badges",
+        "git_repo",
+        "icon",
+        "id",
+        "license",
+        "maintainers",
+        "version",
+        "source",
+        "config",
+        "format_version",
+        "download_url",
+        "attachments",
+        "rdf_source"
+    ],
+    "version": {
+        "ui:description": "The version number of the resource. The version number format must be a string in `MAJOR.MINOR.PATCH` format following the guidelines in Semantic Versioning 2.0.0 (see https://semver.org/), e.g. the initial version number should be `0.1.0`.",
+        "ui:title": "Version"
+    }
+}
