@@ -7,10 +7,11 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
 
 * <a id="format_version"></a>`format_version` _(required String)_ Version of the BioImage.IO Resource Description File Specification used.The current general format version described here is 0.2.3. Note: The general RDF format is not to be confused with specialized RDF format like the Model RDF format.
 * <a id="description"></a>`description` _(required String)_ A string containing a brief description.
-* <a id="inputs"></a>`inputs` _(required List\[Arg\])_ Describes the inputs expected by this model.
+* <a id="inputs"></a>`inputs` _(required List\[Arg\])_ Describes the inputs expected by this workflow.
     1.  _(Arg)_   is a Dict with the following keys:
         * <a id="inputs:name"></a>`name` _(String)_ Argument/tensor name. No duplicates are allowed.
-        * <a id="inputs:type"></a>`type` _(String)_ Argument type. One of: ('tensor', 'string', 'object')
+        * <a id="inputs:type"></a>`type` _(String)_ Argument type. One of: ('tensor', 'int', 'float', 'string', 'boolean', 'list', 'dict', 'any')
+        * <a id="inputs:default"></a>`default` _(Raw)_ Default value compatible with type given by `type` field.
         * <a id="inputs:description"></a>`description` _(String)_ Description of argument/tensor.
 * <a id="name"></a>`name` _(required Name→String)_ name of the resource, a human-friendly name
 * <a id="steps"></a>`steps` _(required List\[Step\])_ Workflow steps to be executed consecutively.
@@ -21,8 +22,14 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
             1.  _(String)_ named output of a previous step with the pattern '<step id>.outputs.<output name>'
         * <a id="steps:kwargs"></a>`kwargs` _(Kwargs→Dict\[String, Any\])_ Key word arguments for op.
         * <a id="steps:outputs"></a>`outputs` _(List\[String\])_ output names for this step
-* <a id="test_inputs"></a>`test_inputs` _(required List\[Union\[URI→String | Path→String\]\])_ List of URIs or local relative paths to test inputs as described in inputs for **a single test case**. This means if your workflow has more than one input, you should provide one URI for each input.Each test input should be a file with a ndarray in [numpy.lib file format](https://numpy.org/doc/stable/reference/generated/numpy.lib.format.html#module-numpy.lib.format).The extension must be '.npy'.
-* <a id="test_outputs"></a>`test_outputs` _(required List\[Union\[URI→String | Path→String\]\])_ Analog to test_inputs.
+* <a id="test_steps"></a>`test_steps` _(required List\[Step\])_ Test steps to be executed consecutively.
+    1.  _(Step)_   is a Dict with the following keys:
+        * <a id="test_steps:op"></a>`op` _(String)_ Name of operation. Must be implemented in bioimageio.core or bioimageio.contrib.
+        * <a id="test_steps:id"></a>`id` _(String)_ Step id for referencing the steps' kwargs or outputs.
+        * <a id="test_steps:inputs"></a>`inputs` _(List\[String\])_ 
+            1.  _(String)_ named output of a previous step with the pattern '<step id>.outputs.<output name>'
+        * <a id="test_steps:kwargs"></a>`kwargs` _(Kwargs→Dict\[String, Any\])_ Key word arguments for op.
+        * <a id="test_steps:outputs"></a>`outputs` _(List\[String\])_ output names for this step
 * <a id="attachments"></a>`attachments` _(optional Attachments)_ Additional unknown keys are allowed. Attachments is a Dict with the following keys:
     * <a id="attachments:files"></a>`files` _(optional List\[Union\[URI→String | Path→String\]\])_ File attachments; included when packaging the resource.
 * <a id="authors"></a>`authors` _(optional List\[Author\])_ A list of authors. The authors are the creators of the specifications and the primary points of contact.
@@ -49,6 +56,12 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
 * <a id="git_repo"></a>`git_repo` _(optional URL→URI)_ A url to the git repository, e.g. to Github or Gitlab.
 * <a id="icon"></a>`icon` _(optional String)_ an icon for the resource
 * <a id="id"></a>`id` _(optional String)_ Unique id within a collection of resources.
+* <a id="kwargs"></a>`kwargs` _(optional List\[WorkflowKwarg\])_ Key word arguments for this workflow.
+    1.  _(WorkflowKwarg)_   is a Dict with the following keys:
+        * <a id="kwargs:default"></a>`default` _(Raw)_ Default value compatible with type given by `type` field.
+        * <a id="kwargs:name"></a>`name` _(String)_ Key word argument name. No duplicates are allowed.
+        * <a id="kwargs:type"></a>`type` _(String)_ Argument type. One of: ('tensor', 'int', 'float', 'string', 'boolean', 'list', 'dict', 'any')
+        * <a id="kwargs:description"></a>`description` _(String)_ Description of key word argument.
 * <a id="license"></a>`license` _(optional String)_ A [SPDX license identifier](https://spdx.org/licenses/)(e.g. `CC-BY-4.0`, `MIT`, `BSD-2-Clause`). We don't support custom license beyond the SPDX license list, if you need that please send an Github issue to discuss your intentions with the community.
 * <a id="links"></a>`links` _(optional List\[String\])_ links to other bioimage.io resources
 * <a id="maintainers"></a>`maintainers` _(optional List\[Maintainer\])_ Maintainers of this resource.
@@ -57,10 +70,11 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
         * <a id="maintainers:github_user"></a>`github_user` _(String)_ GitHub user name.
         * <a id="maintainers:name"></a>`name` _(Name→String)_ Full name.
         * <a id="maintainers:orcid"></a>`orcid` _(String)_ [orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)
-* <a id="outputs"></a>`outputs` _(optional List\[Arg\])_ Describes the outputs from this model.
+* <a id="outputs"></a>`outputs` _(optional List\[Arg\])_ Describes the outputs from this workflow.
     1.  _(Arg)_   is a Dict with the following keys:
         * <a id="outputs:name"></a>`name` _(String)_ Argument/tensor name. No duplicates are allowed.
-        * <a id="outputs:type"></a>`type` _(String)_ Argument type. One of: ('tensor', 'string', 'object')
+        * <a id="outputs:type"></a>`type` _(String)_ Argument type. One of: ('tensor', 'int', 'float', 'string', 'boolean', 'list', 'dict', 'any')
+        * <a id="outputs:default"></a>`default` _(Raw)_ Default value compatible with type given by `type` field.
         * <a id="outputs:description"></a>`description` _(String)_ Description of argument/tensor.
 * <a id="rdf_source"></a>`rdf_source` _(optional Union\[URL→URI | DOI→String\])_ url or doi to the source of the resource definition
 * <a id="source"></a>`source` _(optional Union\[URI→String | Path→String\])_ url or local relative path to the source of the resource

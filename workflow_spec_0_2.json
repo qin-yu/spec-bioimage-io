@@ -5,6 +5,13 @@
         "Arg": {
             "additionalProperties": false,
             "properties": {
+                "default": {
+                    "title": "default",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "description": {
                     "title": "description",
                     "type": "string"
@@ -16,8 +23,13 @@
                 "type": {
                     "enum": [
                         "tensor",
+                        "int",
+                        "float",
                         "string",
-                        "object"
+                        "boolean",
+                        "list",
+                        "dict",
+                        "any"
                     ],
                     "enumNames": [],
                     "title": "type",
@@ -302,6 +314,14 @@
                     "title": "inputs",
                     "type": "array"
                 },
+                "kwargs": {
+                    "items": {
+                        "$ref": "#/definitions/WorkflowKwarg",
+                        "type": "object"
+                    },
+                    "title": "kwargs",
+                    "type": "array"
+                },
                 "license": {
                     "title": "license",
                     "type": "string"
@@ -376,38 +396,13 @@
                     "title": "tags",
                     "type": "array"
                 },
-                "test_inputs": {
+                "test_steps": {
                     "items": {
-                        "anyOf": [
-                            {
-                                "title": "",
-                                "type": "string"
-                            },
-                            {
-                                "title": "",
-                                "type": "string"
-                            }
-                        ]
+                        "$ref": "#/definitions/Step",
+                        "type": "object"
                     },
                     "minItems": 1,
-                    "title": "test_inputs",
-                    "type": "array"
-                },
-                "test_outputs": {
-                    "items": {
-                        "anyOf": [
-                            {
-                                "title": "",
-                                "type": "string"
-                            },
-                            {
-                                "title": "",
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "minItems": 1,
-                    "title": "test_outputs",
+                    "title": "test_steps",
                     "type": "array"
                 },
                 "type": {
@@ -425,8 +420,48 @@
                 "inputs",
                 "name",
                 "steps",
-                "test_inputs",
-                "test_outputs",
+                "test_steps",
+                "type"
+            ],
+            "type": "object"
+        },
+        "WorkflowKwarg": {
+            "additionalProperties": false,
+            "properties": {
+                "default": {
+                    "title": "default",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "title": "description",
+                    "type": "string"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "tensor",
+                        "int",
+                        "float",
+                        "string",
+                        "boolean",
+                        "list",
+                        "dict",
+                        "any"
+                    ],
+                    "enumNames": [],
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "default",
+                "name",
                 "type"
             ],
             "type": "object"
