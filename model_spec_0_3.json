@@ -544,8 +544,16 @@
                     "type": "string"
                 },
                 "source": {
-                    "title": "source",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "title": "",
+                            "type": "string"
+                        },
+                        {
+                            "title": "",
+                            "type": "string"
+                        }
+                    ]
                 },
                 "tags": {
                     "items": {

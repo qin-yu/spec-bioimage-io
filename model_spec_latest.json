@@ -1541,8 +1541,16 @@
             "additionalProperties": false,
             "properties": {
                 "architecture": {
-                    "title": "architecture",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "title": "",
+                            "type": "string"
+                        },
+                        {
+                            "title": "",
+                            "type": "string"
+                        }
+                    ]
                 },
                 "architecture_sha256": {
                     "maxLength": 64,

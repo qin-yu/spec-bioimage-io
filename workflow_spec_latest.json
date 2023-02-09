@@ -2,46 +2,6 @@
     "$ref": "#/definitions/Workflow",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "Arg": {
-            "additionalProperties": false,
-            "properties": {
-                "default": {
-                    "title": "default",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "description": {
-                    "title": "description",
-                    "type": "string"
-                },
-                "name": {
-                    "title": "name",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "tensor",
-                        "int",
-                        "float",
-                        "string",
-                        "boolean",
-                        "list",
-                        "dict",
-                        "any"
-                    ],
-                    "enumNames": [],
-                    "title": "type",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "name",
-                "type"
-            ],
-            "type": "object"
-        },
         "Attachments": {
             "additionalProperties": true,
             "properties": {
@@ -90,6 +50,98 @@
                     "type": "string"
                 }
             },
+            "type": "object"
+        },
+        "Axis": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "title": "description",
+                    "type": "string"
+                },
+                "name": {
+                    "anyOf": [
+                        {
+                            "maxLength": 32,
+                            "minLength": 1,
+                            "title": "",
+                            "type": "string"
+                        },
+                        {
+                            "items": {
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "title": "",
+                                "type": "string"
+                            },
+                            "title": "",
+                            "type": "array"
+                        }
+                    ]
+                },
+                "scaling_factor": {
+                    "anyOf": [
+                        {
+                            "exclusiveMinimum": 0,
+                            "format": "float",
+                            "title": "",
+                            "type": "number"
+                        },
+                        {
+                            "items": {
+                                "exclusiveMinimum": 0,
+                                "format": "float",
+                                "title": "",
+                                "type": "number"
+                            },
+                            "title": "",
+                            "type": "array"
+                        }
+                    ]
+                },
+                "step": {
+                    "format": "float",
+                    "title": "step",
+                    "type": "number"
+                },
+                "type": {
+                    "enum": [
+                        "batch",
+                        "channel",
+                        "index",
+                        "time",
+                        "space"
+                    ],
+                    "enumNames": [],
+                    "title": "type",
+                    "type": "string"
+                },
+                "unit": {
+                    "anyOf": [
+                        {
+                            "maxLength": 32,
+                            "minLength": 1,
+                            "title": "",
+                            "type": "string"
+                        },
+                        {
+                            "items": {
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "title": "",
+                                "type": "string"
+                            },
+                            "title": "",
+                            "type": "array"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "type"
+            ],
             "type": "object"
         },
         "Badge": {
@@ -142,6 +194,60 @@
             ],
             "type": "object"
         },
+        "Input": {
+            "additionalProperties": false,
+            "properties": {
+                "axes": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "$ref": "#/definitions/Axis",
+                                "type": "object"
+                            },
+                            "title": "",
+                            "type": "array"
+                        },
+                        {
+                            "enum": [
+                                "unknown"
+                            ],
+                            "title": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "description": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "title": "description",
+                    "type": "string"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "tensor",
+                        "int",
+                        "float",
+                        "string",
+                        "boolean",
+                        "list",
+                        "dict",
+                        "any"
+                    ],
+                    "enumNames": [],
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
         "Maintainer": {
             "additionalProperties": false,
             "properties": {
@@ -170,41 +276,119 @@
             },
             "type": "object"
         },
-        "Step": {
+        "Option": {
             "additionalProperties": false,
             "properties": {
-                "id": {
-                    "title": "id",
+                "axes": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "$ref": "#/definitions/Axis",
+                                "type": "object"
+                            },
+                            "title": "",
+                            "type": "array"
+                        },
+                        {
+                            "enum": [
+                                "unknown"
+                            ],
+                            "title": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "default": {
+                    "title": "default",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "title": "description",
                     "type": "string"
                 },
-                "inputs": {
-                    "items": {
-                        "title": "inputs",
-                        "type": "string"
-                    },
-                    "title": "inputs",
-                    "type": "array"
-                },
-                "kwargs": {
-                    "additionalProperties": {},
-                    "title": "kwargs",
-                    "type": "object"
-                },
-                "op": {
-                    "title": "op",
+                "name": {
+                    "title": "name",
                     "type": "string"
                 },
-                "outputs": {
-                    "items": {
-                        "title": "outputs",
-                        "type": "string"
-                    },
-                    "title": "outputs",
-                    "type": "array"
+                "type": {
+                    "enum": [
+                        "tensor",
+                        "int",
+                        "float",
+                        "string",
+                        "boolean",
+                        "list",
+                        "dict",
+                        "any"
+                    ],
+                    "enumNames": [],
+                    "title": "type",
+                    "type": "string"
                 }
             },
             "required": [
-                "op"
+                "default",
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Output": {
+            "additionalProperties": false,
+            "properties": {
+                "axes": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "$ref": "#/definitions/Axis",
+                                "type": "object"
+                            },
+                            "title": "",
+                            "type": "array"
+                        },
+                        {
+                            "enum": [
+                                "unknown"
+                            ],
+                            "title": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "description": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "title": "description",
+                    "type": "string"
+                },
+                "name": {
+                    "title": "name",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "tensor",
+                        "int",
+                        "float",
+                        "string",
+                        "boolean",
+                        "list",
+                        "dict",
+                        "any"
+                    ],
+                    "enumNames": [],
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
             ],
             "type": "object"
         },
@@ -307,19 +491,10 @@
                 },
                 "inputs": {
                     "items": {
-                        "$ref": "#/definitions/Arg",
+                        "$ref": "#/definitions/Input",
                         "type": "object"
                     },
-                    "minItems": 1,
                     "title": "inputs",
-                    "type": "array"
-                },
-                "kwargs": {
-                    "items": {
-                        "$ref": "#/definitions/WorkflowKwarg",
-                        "type": "object"
-                    },
-                    "title": "kwargs",
                     "type": "array"
                 },
                 "license": {
@@ -346,9 +521,17 @@
                     "title": "name",
                     "type": "string"
                 },
+                "options": {
+                    "items": {
+                        "$ref": "#/definitions/Option",
+                        "type": "object"
+                    },
+                    "title": "options",
+                    "type": "array"
+                },
                 "outputs": {
                     "items": {
-                        "$ref": "#/definitions/Arg",
+                        "$ref": "#/definitions/Output",
                         "type": "object"
                     },
                     "minItems": 1,
@@ -379,30 +562,12 @@
                         }
                     ]
                 },
-                "steps": {
-                    "items": {
-                        "$ref": "#/definitions/Step",
-                        "type": "object"
-                    },
-                    "minItems": 1,
-                    "title": "steps",
-                    "type": "array"
-                },
                 "tags": {
                     "items": {
                         "title": "tags",
                         "type": "string"
                     },
                     "title": "tags",
-                    "type": "array"
-                },
-                "test_steps": {
-                    "items": {
-                        "$ref": "#/definitions/Step",
-                        "type": "object"
-                    },
-                    "minItems": 1,
-                    "title": "test_steps",
                     "type": "array"
                 },
                 "type": {
@@ -419,49 +584,7 @@
                 "format_version",
                 "inputs",
                 "name",
-                "steps",
-                "test_steps",
-                "type"
-            ],
-            "type": "object"
-        },
-        "WorkflowKwarg": {
-            "additionalProperties": false,
-            "properties": {
-                "default": {
-                    "title": "default",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "description": {
-                    "title": "description",
-                    "type": "string"
-                },
-                "name": {
-                    "title": "name",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "tensor",
-                        "int",
-                        "float",
-                        "string",
-                        "boolean",
-                        "list",
-                        "dict",
-                        "any"
-                    ],
-                    "enumNames": [],
-                    "title": "type",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "default",
-                "name",
+                "options",
                 "type"
             ],
             "type": "object"
