@@ -1,4 +1,4 @@
-# BioImage.IO Model Resource Description File Specification 0.4.8
+# BioImage.IO Model Resource Description File Specification 0.4.9
 This specification defines the fields used in a BioImage.IO-compliant resource description file (`RDF`) for describing AI models with pretrained weights.
 These fields are typically stored in YAML files which we call Model Resource Description Files or `model RDF`.
 The model RDFs can be downloaded or uploaded to the bioimage.io website, produced or consumed by BioImage.IO-compatible consumers(e.g. image analysis software or other website).
@@ -10,10 +10,11 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
     This is mandatory, and important for the consumer software to verify before parsing the fields.
     The recommended behavior for the implementation is to keep backward compatibility and throw an error if the model yaml
     is in an unsupported format version. The current format version described here is
-    0.4.8
+    0.4.9
 * <a id="authors"></a>`authors` _(required List\[Author\])_ A list of authors. The authors are the creators of the specifications and the primary points of contact.
     1.  _(Author)_   is a Dict with the following keys:
         * <a id="authors:affiliation"></a>`affiliation` _(String)_ Affiliation.
+        * <a id="authors:email"></a>`email` _(Email)_ E-Mail
         * <a id="authors:github_user"></a>`github_user` _(String)_ GitHub user name.
         * <a id="authors:name"></a>`name` _(Name→String)_ Full name.
         * <a id="authors:orcid"></a>`orcid` _(String)_ [orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)
@@ -106,6 +107,7 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
 * <a id="maintainers"></a>`maintainers` _(optional List\[Maintainer\])_ Maintainers of this resource.
     1.  _(Maintainer)_   is a Dict with the following keys:
         * <a id="maintainers:affiliation"></a>`affiliation` _(String)_ Affiliation.
+        * <a id="maintainers:email"></a>`email` _(Email)_ E-Mail
         * <a id="maintainers:github_user"></a>`github_user` _(String)_ GitHub user name.
         * <a id="maintainers:name"></a>`name` _(Name→String)_ Full name.
         * <a id="maintainers:orcid"></a>`orcid` _(String)_ [orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)
@@ -138,6 +140,7 @@ _optional*_ with an asterisk indicates the field is optional depending on the va
 * <a id="packaged_by"></a>`packaged_by` _(optional List\[Author\])_ The persons that have packaged and uploaded this model. Only needs to be specified if different from `authors` in root or any entry in `weights`.
     1.  _(Author)_   is a Dict with the following keys:
         * <a id="packaged_by:affiliation"></a>`affiliation` _(String)_ Affiliation.
+        * <a id="packaged_by:email"></a>`email` _(Email)_ E-Mail
         * <a id="packaged_by:github_user"></a>`github_user` _(String)_ GitHub user name.
         * <a id="packaged_by:name"></a>`name` _(Name→String)_ Full name.
         * <a id="packaged_by:orcid"></a>`orcid` _(String)_ [orcid](https://support.orcid.org/hc/en-us/sections/360001495313-What-is-ORCID) id in hyphenated groups of 4 digits, e.g. '0000-0001-2345-6789' (and [valid](https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier) as per ISO 7064 11,2.)
